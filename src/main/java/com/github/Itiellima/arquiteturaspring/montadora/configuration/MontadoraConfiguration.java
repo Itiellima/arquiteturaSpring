@@ -4,6 +4,7 @@ import com.github.Itiellima.arquiteturaspring.montadora.Motor;
 import com.github.Itiellima.arquiteturaspring.montadora.TipoMotor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 
 @Configuration
 public class MontadoraConfiguration {
@@ -20,6 +21,7 @@ public class MontadoraConfiguration {
     }
 
     @Bean(name ="motorEletrico")
+    @Primary
     public Motor motorEletrico(){
         var motor = new Motor();
         motor.setCavalos(110);
