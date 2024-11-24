@@ -1,20 +1,27 @@
 package com.github.Itiellima.arquiteturaspring.todos;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("todos")
-public class todoController {
+public class TodoController {
 
     private TodoService service;
 
-    public todoController(TodoService service) {
+    public TodoController(TodoService service) {
         this.service = service;
     }
 
     @PostMapping
     public TodoEntity salvar(@RequestBody TodoEntity todo){
-        return this.service.salvar(todo);
+        try{
+            return this.service.salvar(todo);
+        }catch (IllegalArgumentException e){
+            var mensagemErro = e.getMessage();
+            throw new ResponseStatusException(HttpStatus.CONFLICT, mensagemErro);
+        }
     }
 
     @PutMapping("{id}")
